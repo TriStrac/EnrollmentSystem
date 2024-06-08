@@ -1,6 +1,65 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model EnrollmentSystem.Web.Models.Database.Subject
+
+<form asp-action="SubmitSubject" method="post">
+    <div class="mb-3">
+        <label for="subjCode" class="form-label">Subject Code</label>
+        <input type="text" class="form-control" id="subjCode" asp-for="SubjectCode">
+        <span asp-validation-for="SubjectCode" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="description" asp-for="SubjectDesc">
+        <span asp-validation-for="SubjectDesc" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="units" class="form-label">Units</label>
+        <input type="number" class="form-control" id="units" asp-for="Units">
+        <span asp-validation-for="Units" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="regOffering" class="form-label">Regular Offering</label>
+        <select id="regOffering" class="form-select" asp-for="RegOffer">
+            <option value="" selected>Choose Semester</option>
+            <option value="1">First Semester</option>
+            <option value="2">Second Semester</option>
+        </select>
+        <span asp-validation-for="RegOffer" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" class="form-select" asp-for="Category">
+            <option value="" selected>Choose Category</option>
+            <option value="Lecture">Lecture</option>
+            <option value="Laboratory">Laboratory</option>
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div class="mb-3 mt-4">
+        <label class="form-label d-block mb-2">Status:</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="Status" id="flexRadioDefault1" value="Active" asp-for="Status" checked>
+            <label class="form-check-label" for="flexRadioDefault1">Active</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="Status" id="flexRadioDefault2" value="Inactive" asp-for="Status">
+            <label class="form-check-label" for="flexRadioDefault2">Inactive</label>
+        </div>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="courseCode" class="form-label">Course Code</label>
+        <input type="text" class="form-control" id="courseCode" asp-for="CourseCode">
+        <span asp-validation-for="CourseCode" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="curriculum" class="form-label">Curriculum</label>
+        <input type="text" class="form-control" id="curriculum" asp-for="Curriculum">
+        <span asp-validation-for="Curriculum" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
-<h1>page 2</h1>
