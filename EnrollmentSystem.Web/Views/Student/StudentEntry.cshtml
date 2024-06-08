@@ -3,4 +3,60 @@
 *@
 @{
 }
-<h1>page 1</h1>
+<form>
+    <div class="mb-3">
+        <label for="idNumberInput" class="form-label">ID Number</label>
+        <input type="number" class="form-control" id="idNumberInput" >
+    </div>
+    <div class="mb-3">
+        <label for="lastNameInput" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lastNameInput">
+    </div>
+    <div class="mb-3">
+        <label for="firstNameInput" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="firstNameInput">
+    </div>
+    <div class="mb-3">
+        <label for="middleNameInput" class="form-label">Middle Name</label>
+        <input type="text" class="form-control" id="middleNameInput">
+    </div>
+    <div class="mb-3">
+        <label for="courseInput" class="form-label">Course</label>
+        <input type="text" class="form-control" id="courseInput">
+    </div>
+    <div class="mb-3">
+        <label for="yearInput" class="form-label">Year</label>
+        <input type="number" class="form-control" id="yearInput">
+    </div>
+    <label for="remarksSelect" class="form-label">Remarks</label>
+    <select id="remarksSelect" class="form-select">
+        
+        <option selected>Choose Remarks</option>
+        <option value="1">Shiftee</option>
+        <option value="2">Transferee</option>
+        <option value="3">New</option>
+        <option value="4">Old</option>
+        <option value="5">Cross-Enroll</option>
+    </select>
+
+    <div class="mb-3 mt-4">
+        <label class="form-label d-block mb-2">Choose a status:</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+            <label class="form-check-label" for="flexRadioDefault1">
+                Active
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+            <label class="form-check-label" for="flexRadioDefault2">
+                Inactive
+            </label>
+        </div>
+    </div>
+
+
+    <div class="d-grid gap-2">
+        <button type="submit"class="btn btn-primary" >Submit</button>
+    </div>
+</form>
