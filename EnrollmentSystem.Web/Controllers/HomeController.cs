@@ -12,7 +12,7 @@ namespace EnrollmentSystem.Web.Controllers
         {
             _logger = logger;
         }
-
+        //wew amesing
         public IActionResult Index()
         {
             return View();
