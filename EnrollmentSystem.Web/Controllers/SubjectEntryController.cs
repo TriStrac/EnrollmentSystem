@@ -2,12 +2,11 @@
 
 namespace EnrollmentSystem.Web.Controllers
 {
-    public class StudentController : Controller
+    public class SubjectEntryController : Controller
     {
-        public IActionResult StudentEntry()
+        public IActionResult SubjectEntry()
         {
             return View();
         }
-        
     }
 }
