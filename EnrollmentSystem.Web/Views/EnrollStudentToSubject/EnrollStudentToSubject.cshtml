@@ -1,7 +1,182 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Enroll Student to Subject";
 }
 
-<h1>page 4</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll Student to Subject</title>
+    <link rel="stylesheet" href="~/css/Design.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EnrollmentSystem.Web.styles.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="student-id" class="form-label">Student ID Number</label>
+            <div class="input-group mb-3">
+                <input type="number" class="form-control" id="student-id" placeholder="Input Student ID Number" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="findStudent()">Find</button>
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group">
+                <label for="student-name" class="form-label">Student Name</label>
+                <input class="form-control" type="text" id="student-name" aria-label="StudentName" disabled readonly>
+            </div>
+            <div class="form-group">
+                <label for="student-course" class="form-label">Course</label>
+                <input class="form-control" type="text" id="student-course" aria-label="StudentCourse" disabled readonly>
+            </div>
+            <div class="form-group">
+                <label for="student-year" class="form-label">Year</label>
+                <input class="form-control" type="text" id="student-year" aria-label="StudentYear" disabled readonly>
+            </div>
+        </div>
+
+        <br />
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Edp Code</span>
+            <input type="number" class="form-control" id="subject-edp-code" placeholder="Input edp code here" aria-describedby="basic-addon1" oninput="findSubject()">
+        </div>
+
+        <h5>Subject Schedules</h5>
+        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Edp Code</th>
+                        <th scope="col">Subject Code</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Days</th>
+                        <th scope="col">Room</th>
+                        <th scope="col">Section</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="subject-schedule-body">
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <h5>Student Subjects</h5>
+        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Edp Code</th>
+                        <th scope="col">Subject Code</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Days</th>
+                        <th scope="col">Room</th>
+                        <th scope="col">Section</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                        <td><button class="btn btn-primary">Action</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                        <td><button class="btn btn-primary">Action</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Encoder Name" aria-describedby="button-addon2">
+            <input class="form-control" type="text" value="Total Units: 3" disabled readonly>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Save</button>
+        </div>
+    </div>
+
+    <script>
+        function findStudent() {
+            var studentId = document.getElementById("student-id").value;
+            if (studentId) {
+                $.ajax({
+                    url: '/api/EnrollStudentToSubject/' + studentId,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log("Success:", data); // Log the data to see what is being returned
+                        if (data) {
+                            document.getElementById("student-name").value = data.firstName + ' ' + data.lastName;
+                            document.getElementById("student-course").value = data.course;
+                            document.getElementById("student-year").value = data.year;
+                        } else {
+                            alert('No data returned.');
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error:", xhr, textStatus, errorThrown);
+                        if (xhr.status == 404) {
+                            alert('Student not found.');
+                        } else {
+                            alert('Error: ' + errorThrown);
+                        }
+                    }
+                });
+            } else {
+                alert('Please enter a student ID.');
+            }
+        }
+
+        function findSubject() {
+            var edpCode = document.getElementById("subject-edp-code").value;
+            if (edpCode) {
+                $.ajax({
+                    url: '/api/EnrollStudentToSubject/SubjectSchedule/' + edpCode,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log("Subject Schedule Success:", data); // Log the data to see what is being returned
+                        if (data) {
+                            var tbody = document.getElementById("subject-schedule-body");
+                            tbody.innerHTML = `
+                                        <tr>
+                                            <th scope="row">${data.edpCode}</th>
+                                            <td>${data.subjectCode}</td>
+                                            <td>${data.startTime}</td>
+                                            <td>${data.endTime}</td>
+                                            <td>${data.days}</td>
+                                            <td>${data.room}</td>
+                                            <td>${data.section}</td>
+                                            <td><button class="btn btn-primary">Action</button></td>
+                                        </tr>`;
+                        } else {
+                            alert('No data returned.');
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        
+                    }
+                });
+            } else {
+                alert('Please enter an Edp Code.');
+            }
+        }
+    </script>
+</body>
+</html>

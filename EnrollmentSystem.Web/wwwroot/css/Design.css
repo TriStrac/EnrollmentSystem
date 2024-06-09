@@ -2312,8 +2312,16 @@ progress {
 }
 
 .table-responsive {
-    overflow-x: auto;
+    position: relative;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: white;
 }
 
 @media (max-width: 575.98px) {
@@ -4263,6 +4271,7 @@ textarea.form-control-lg {
     --bs-nav-link-color: var(--bs-link-color);
     --bs-nav-link-hover-color: #015B88;
     --bs-nav-link-disabled-color: rgba(255, 255, 255, 0.7);
+    position: sticky;
     display: flex;
     flex-wrap: wrap;
     padding-left: 0;
@@ -4418,7 +4427,7 @@ textarea.form-control-lg {
     --bs-navbar-brand-padding-y: 0.3125rem;
     --bs-navbar-brand-margin-end: 1rem;
     --bs-navbar-brand-font-size: 1.25rem;
-    --bs-navbar-brand-color: rgba(var(--bs-emphasis-color-rgb), 1);
+    --bs-navbar-brand-color: #00008b;
     --bs-navbar-brand-hover-color: rgba(var(--bs-emphasis-color-rgb), 1);
     --bs-navbar-nav-link-padding-x: 0.5rem;
     --bs-navbar-toggler-padding-y: 0.25rem;
@@ -4455,7 +4464,7 @@ textarea.form-control-lg {
     padding-bottom: var(--bs-navbar-brand-padding-y);
     margin-right: var(--bs-navbar-brand-margin-end);
     font-size: var(--bs-navbar-brand-font-size);
-    color: var(--bs-navbar-brand-color);
+    color: #00008b;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -4663,6 +4672,10 @@ textarea.form-control-lg {
 
 @media (min-width: 992px) {
     .navbar-expand-lg {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1030; /* Ensures the navbar stays on top of other elements */
         flex-wrap: nowrap;
         justify-content: flex-start;
     }
@@ -4717,6 +4730,7 @@ textarea.form-control-lg {
                 overflow-y: visible;
             }
 }
+
 
 @media (min-width: 1200px) {
     .navbar-expand-xl {
@@ -4893,7 +4907,7 @@ textarea.form-control-lg {
     --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
     --bs-navbar-disabled-color: rgba(255, 255, 255, 0.25);
     --bs-navbar-active-color: #fff;
-    --bs-navbar-brand-color: #fff;
+    --bs-navbar-brand-color: #00008b;
     --bs-navbar-brand-hover-color: #fff;
     --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.1);
     --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -13733,6 +13747,7 @@ textarea.form-control-lg {
 
 body {
     background-image: linear-gradient(90deg, #33b7e2, #5e62b0, #0c3a73);
+    padding-top: 90px;
 }
 
 [data-bs-theme=dark] body {
