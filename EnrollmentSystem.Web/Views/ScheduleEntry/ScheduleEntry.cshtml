@@ -1,4 +1,7 @@
 ﻿@model EnrollmentSystem.Web.Models.Database.SubjectSched
+@{
+    ViewData["Title"] = "Schedule Entry";
+}
 
 <form method="post" asp-action="SubmitSched">
     <div class="mb-3">
@@ -6,51 +9,100 @@
         <input type="number" class="form-control" id="EdpCodeInput" asp-for="EdpCode" required>
     </div>
     <div class="mb-3">
-        <label for="SubjectCodeInput" class="form-label">Subject Code</label>
-        <input type="text" class="form-control" id="SubjectCodeInput" asp-for="SubjectCode" required>
+        <label for="subjectCodeInput" class="form-label">Subject Code</label>
+        <select id="subjectCodeInput" class="form-select" asp-for="SubjectCode" required>
+            <option value="">Choose Subject Code</option>
+            @foreach (var subject in ViewBag.Subjects)
+            {
+                <option value="@subject.SubjectCode">@subject.SubjectCode</option>
+            }
+        </select>
+        <span asp-validation-for="SubjectCode" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label for="StartTimeInput" class="form-label">Start Time</label>
-        <input type="text" class="form-control" id="StartTimeInput" asp-for="StartTime" required>
+        <input type="time" class="form-control" id="StartTimeInput" asp-for="StartTime" required>
     </div>
     <div class="mb-3">
         <label for="EndTimeInput" class="form-label">End Time</label>
-        <input type="text" class="form-control" id="EndTimeInput" asp-for="EndTime">
+        <input type="time" class="form-control" id="EndTimeInput" asp-for="EndTime">
     </div>
     <div class="mb-3">
-        <label for="courseInput" class="form-label">Days</label>
-        <input type="text" class="form-control" id="courseInput" asp-for="Days" required>
+        <label class="form-label">Days</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="sundayCheck" name="sunday" value="Su">
+            <label class="form-check-label" for="sundayCheck">Sunday</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="mondayCheck" name="monday" value="M">
+            <label class="form-check-label" for="mondayCheck">Monday</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tuesdayCheck" name="tuesday" value="T">
+            <label class="form-check-label" for="tuesdayCheck">Tuesday</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="wednesdayCheck" name="wednesday" value="W">
+            <label class="form-check-label" for="wednesdayCheck">Wednesday</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="thursdayCheck" name="thursday" value="Th">
+            <label class="form-check-label" for="thursdayCheck">Thursday</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="fridayCheck" name="friday" value="F">
+            <label class="form-check-label" for="fridayCheck">Friday</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="saturdayCheck" name="saturday" value="Sa">
+            <label class="form-check-label" for="saturdayCheck">Saturday</label>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="roomInput" class="form-label">Room</label>
+        <input type="text" class="form-control" id="roomInput" asp-for="Room" required>
     </div>
     <div class="mb-3">
-        <label for="yearInput" class="form-label">Room</label>
-        <input type="text" class="form-control" id="yearInput" asp-for="Room" required>
-    </div>
-    <div class="mb-3">
-        <label for="remarksSelect" class="form-label">Remarks</label>
-        <select id="remarksSelect" class="form-select" asp-for="Remarks">
-            <option value="" selected>Choose Remarks</option>
-            <option value="Shiftee">Shiftee</option>
-            <option value="Transferee">Transferee</option>
-            <option value="New">New</option>
-            <option value="Old">Old</option>
-            <option value="Cross-Enroll">Cross-Enroll</option>
-        </select>
+        <label for="maxSizeInput" class="form-label">Max Size</label>
+        <input type="text" class="form-control" id="maxSizeInput" asp-for="MaxSize" required>
     </div>
     <div class="mb-3 mt-4">
         <label class="form-label d-block mb-2">Status:</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="Status" id="flexRadioDefault1" value="Active" checked>
-            <label class="form-check-label" for="flexRadioDefault1">
-                Active
+            <input class="form-check-input" type="radio" name="StatusGroup" id="flexRadioDefault1" value="Active" asp-for="Status" checked>
+            <label class="form-check-label" for="flexRadioDefault1">Active</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="StatusGroup" id="flexRadioDefault2" value="Inactive" asp-for="Status">
+            <label class="form-check-label" for="flexRadioDefault2">Inactive</label>
+        </div>
+    </div>
+
+    <div class="mb-3 mt-4">
+        <label class="form-label d-block mb-2">XM:</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="XMGroup" id="flexRadioDefault3" value="AM" checked>
+            <label class="form-check-label" for="flexRadioDefault3">
+                AM
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="Status" id="flexRadioDefault2" value="Inactive">
-            <label class="form-check-label" for="flexRadioDefault2">
-                Inactive
+            <input class="form-check-input" type="radio" name="XMGroup" id="flexRadioDefault4" value="PM">
+            <label class="form-check-label" for="flexRadioDefault4">
+                PM
             </label>
         </div>
     </div>
+    <div class="mb-3">
+        <label for="sectionInput" class="form-label">Section</label>
+        <input type="text" class="form-control" id="sectionInput" asp-for="Section" required>
+    </div>
+    <div class="mb-3">
+        <label for="schoolYearInput" class="form-label">School Year</label>
+        <input type="number" class="form-control" id="schoolYearInput" asp-for="SchoolYear" required>
+    </div>
+
     <div class="d-grid gap-2">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>

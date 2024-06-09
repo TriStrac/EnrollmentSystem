@@ -27,7 +27,7 @@ namespace EnrollmentSystem.Web.Controllers
             // Check for duplicate SubjectCode
             if (await _context.SubjectProperty.AnyAsync(s => s.SubjectCode == subject.SubjectCode))
             {
-                ModelState.AddModelError("SubjectCode", "Duplicate subject code");
+                ModelState.AddModelError("SubjectCode", "Subject code already exists.");
             }
 
             if (ModelState.IsValid)
