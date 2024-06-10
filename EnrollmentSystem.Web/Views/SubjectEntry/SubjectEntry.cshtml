@@ -1,6 +1,11 @@
 ﻿@model EnrollmentSystem.Web.Models.Database.Subject
 
-<form asp-action="SubmitSubject" method="post">
+@* <div class="card" style="width: 70rem; height: auto; position: fixed;">
+    <div class="card-body">
+         
+    </div>
+</div> *@
+<form method="post" asp-action="SubmitStudent">
     <div class="mb-3">
         <label for="subjCode" class="form-label">Subject Code</label>
         <input type="text" class="form-control" id="subjCode" asp-for="SubjectCode">
@@ -56,10 +61,10 @@
         <input type="text" class="form-control" id="curriculum" asp-for="Curriculum">
         <span asp-validation-for="Curriculum" class="text-danger"></span>
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
