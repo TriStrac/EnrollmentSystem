@@ -15,102 +15,85 @@
 </head>
 <body>
     <div class="container">
-        <div class="form-group">
-            <label for="student-id" class="form-label">Student ID Number</label>
+        <form id="enrollForm">
+            <div class="form-group">
+                <label for="student-id" class="form-label">Student ID Number</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" id="student-id" name="StudentIdNumber" placeholder="Input Student ID Number" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="findStudent(); findStudentSubjects()">Find</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <div class="form-group">
+                    <label for="student-name" class="form-label">Student Name</label>
+                    <input class="form-control" type="text" id="student-name" name="StudentName" aria-label="StudentName" disabled readonly>
+                </div>
+                <div class="form-group">
+                    <label for="student-course" class="form-label">Course</label>
+                    <input class="form-control" type="text" id="student-course" name="StudentCourse" aria-label="StudentCourse" disabled readonly>
+                </div>
+                <div class="form-group">
+                    <label for="student-year" class="form-label">Year</label>
+                    <input class="form-control" type="text" id="student-year" name="StudentYear" aria-label="StudentYear" disabled readonly>
+                </div>
+            </div>
+
+            <br />
             <div class="input-group mb-3">
-                <input type="number" class="form-control" id="student-id" placeholder="Input Student ID Number" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="findStudent()">Find</button>
+                <span class="input-group-text" id="basic-addon1">Edp Code</span>
+                <input type="number" class="form-control" id="subject-edp-code" placeholder="Input edp code here" aria-describedby="basic-addon1" oninput="findSubject()">
             </div>
-        </div>
-        <div class="input-group">
-            <div class="form-group">
-                <label for="student-name" class="form-label">Student Name</label>
-                <input class="form-control" type="text" id="student-name" aria-label="StudentName" disabled readonly>
+
+            <h5>Subject Schedules</h5>
+            <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Edp Code</th>
+                            <th scope="col">Subject Code</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Days</th>
+                            <th scope="col">Room</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subject-schedule-body">
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label for="student-course" class="form-label">Course</label>
-                <input class="form-control" type="text" id="student-course" aria-label="StudentCourse" disabled readonly>
+
+            <h5>Student Subjects</h5>
+            <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Edp Code</th>
+                            <th scope="col">Subject Code</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Days</th>
+                            <th scope="col">Room</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-schedule-body">
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label for="student-year" class="form-label">Year</label>
-                <input class="form-control" type="text" id="student-year" aria-label="StudentYear" disabled readonly>
+
+            <br />
+            <input type="hidden" name="DateEnrolled" id="date-enrolled">
+            <input type="hidden" name="Status" value="Active" id="status">
+            <label for="total-units" class="form-label">Total Units</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="total-units" name="TotalUnits" value="Total Units: 3" readonly>
+                <input type="text" class="form-control" placeholder="Encoder Name" name="Encoder" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Save</button>
             </div>
-        </div>
-
-        <br />
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Edp Code</span>
-            <input type="number" class="form-control" id="subject-edp-code" placeholder="Input edp code here" aria-describedby="basic-addon1" oninput="findSubject()">
-        </div>
-
-        <h5>Subject Schedules</h5>
-        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Edp Code</th>
-                        <th scope="col">Subject Code</th>
-                        <th scope="col">Start Time</th>
-                        <th scope="col">End Time</th>
-                        <th scope="col">Days</th>
-                        <th scope="col">Room</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="subject-schedule-body">
-                    
-                </tbody>
-            </table>
-        </div>
-
-        <h5>Student Subjects</h5>
-        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Edp Code</th>
-                        <th scope="col">Subject Code</th>
-                        <th scope="col">Start Time</th>
-                        <th scope="col">End Time</th>
-                        <th scope="col">Days</th>
-                        <th scope="col">Room</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                        <td><button class="btn btn-primary">Action</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                        <td><button class="btn btn-primary">Action</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <br />
-
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Encoder Name" aria-describedby="button-addon2">
-            <input class="form-control" type="text" value="Total Units: 3" disabled readonly>
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Save</button>
-        </div>
+        </form>
     </div>
 
     <script>
@@ -144,39 +127,238 @@
             }
         }
 
+        var enrolledSubjects = [];
+
+        function findStudentSubjects() {
+            var studentId = document.getElementById("student-id").value;
+            if (studentId) {
+                $.ajax({
+                    url: '/api/EnrollStudentToSubject/' + studentId + '/EnrolledSubjects',
+                    type: 'GET',
+                    success: function (data) {
+                        console.log("Enrolled Subjects Success:", data); // Log the data to see what is being returned
+                        if (data && data.length > 0) {
+                            enrolledSubjects = data; // Store enrolled subjects
+
+                            var tbody = document.getElementById("student-schedule-body");
+                            tbody.innerHTML = ""; // Clear existing rows
+
+                            // Display enrolled subjects
+                            enrolledSubjects.forEach(function (enrollmentDetail) {
+                                // Map the EdpCode to SubjectSchedProperty to get subject details
+                                $.ajax({
+                                    url: '/api/EnrollStudentToSubject/SubjectSchedule/' + enrollmentDetail.edpCode,
+                                    type: 'GET',
+                                    success: function (subjectData) {
+                                        console.log("Subject Schedule Success:", subjectData); // Log the data to see what is being returned
+                                        if (subjectData) {
+                                            var row = createSubjectRow(subjectData);
+                                            tbody.appendChild(row);
+                                        } else {
+                                            alert('No data returned for Subject Schedule.');
+                                        }
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+                                        alert('Error occurred while fetching Subject Schedule.');
+                                    }
+                                });
+                            });
+                        } else {
+                            alert('No enrolled subjects found for the student.');
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                        alert('Error occurred while fetching enrolled subjects.');
+                    }
+                });
+            } else {
+                alert('Please enter a student ID.');
+            }
+        }
+
+
+        // Function to create a table row for a subject
+        function createSubjectRow(enrollmentDetail) {
+            var row = document.createElement("tr");
+            row.innerHTML = `
+                            <td>${enrollmentDetail.edpCode}</td>
+                            <td>${enrollmentDetail.subjectCode}</td>
+                            <td>${enrollmentDetail.startTime}</td>
+                            <td>${enrollmentDetail.endTime}</td>
+                            <td>${enrollmentDetail.days}</td>
+                            <td>${enrollmentDetail.room}</td>
+                            <td>${enrollmentDetail.section}</td>
+                            <td><button class="btn btn-primary" onclick="removeSubject('${enrollmentDetail.edpCode}')">Remove</button></td>`;
+            return row;
+        }
+
+        function createSubject2Row(enrollmentDetail) {
+            var row = document.createElement("tr");
+            row.innerHTML = `
+                                    <td>${enrollmentDetail.edpCode}</td>
+                                    <td>${enrollmentDetail.subjectCode}</td>
+                                    <td>${enrollmentDetail.startTime}</td>
+                                    <td>${enrollmentDetail.endTime}</td>
+                                    <td>${enrollmentDetail.days}</td>
+                                    <td>${enrollmentDetail.room}</td>
+                                    <td>${enrollmentDetail.section}</td>
+                                    <td><button class="btn btn-primary" onclick="addSubject('${enrollmentDetail.edpCode}')">Add</button></td>`;
+            return row;
+        }
+
+        var subjectDataCache = null; // Variable to cache subject data
+
+        function addSubject(edpCode) {
+            edpCode = parseInt(edpCode);
+            // Check if the subject is already enrolled
+            if (enrolledSubjects.some(subject => subject.edpCode === edpCode)) {
+                alert('Subject already enrolled.');
+                return;
+            }
+            // Check if the subject data is cached
+            if (subjectDataCache.edpCode === edpCode) {
+                var subjectData = subjectDataCache;
+                enrolledSubjects.push(subjectData); // Add subject to enrolled subjects
+
+                // Update UI
+                var tbody = document.getElementById("student-schedule-body");
+                var row = createSubjectRow(subjectData);
+                tbody.appendChild(row);
+
+                // Remove the selected subject from the Subject Schedules list
+                removeSubjectFromScheduleList(edpCode);
+            } else {
+            }
+        }
+
+        function removeSubjectFromScheduleList(edpCode) {
+            // Remove the selected subject from the Subject Schedules list
+            var tbody = document.getElementById("subject-schedule-body");
+            var rows = tbody.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                var rowEdpCode = rows[i].getElementsByTagName("td")[0].innerText;
+                rowEdpCode = parseInt(rowEdpCode)
+                if (rowEdpCode === edpCode) {
+                    tbody.removeChild(rows[i]);
+                    break;
+                }
+            }
+        }
+
         function findSubject() {
             var edpCode = document.getElementById("subject-edp-code").value;
             if (edpCode) {
+                // Reset subjectDataCache to null
+                subjectDataCache = null;
+
                 $.ajax({
                     url: '/api/EnrollStudentToSubject/SubjectSchedule/' + edpCode,
                     type: 'GET',
                     success: function (data) {
                         console.log("Subject Schedule Success:", data); // Log the data to see what is being returned
                         if (data) {
+                            subjectDataCache = data; // Cache the subject data
+
+                            // Clear existing results
                             var tbody = document.getElementById("subject-schedule-body");
-                            tbody.innerHTML = `
-                                        <tr>
-                                            <th scope="row">${data.edpCode}</th>
-                                            <td>${data.subjectCode}</td>
-                                            <td>${data.startTime}</td>
-                                            <td>${data.endTime}</td>
-                                            <td>${data.days}</td>
-                                            <td>${data.room}</td>
-                                            <td>${data.section}</td>
-                                            <td><button class="btn btn-primary">Action</button></td>
-                                        </tr>`;
+                            tbody.innerHTML = "";
+
+                            // Create a new row for the subject data
+                            var row = createSubject2Row(data);
+                            tbody.appendChild(row);
                         } else {
-                            alert('No data returned.');
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        
                     }
                 });
             } else {
-                alert('Please enter an Edp Code.');
             }
         }
+
+        function removeSubject(edpCode) {
+            edpCode = parseInt(edpCode);
+            // Remove subject from enrolled subjects array
+            enrolledSubjects = enrolledSubjects.filter(subject => subject.edpCode !== edpCode);
+
+            // Log enrolled subjects array to verify it's being updated correctly
+            console.log("Enrolled Subjects after removal:", enrolledSubjects);
+
+            // Update UI by removing the corresponding row from the table
+            var tbody = document.getElementById("student-schedule-body");
+            var rows = tbody.getElementsByTagName("tr");
+            for (var i = 0; i < rows.length; i++) {
+                var rowEdpCode = parseInt(rows[i].getElementsByTagName("td")[0].innerText); // Convert to integer
+                if (rowEdpCode === edpCode) {
+                    tbody.removeChild(rows[i]);
+                    break;
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            $('#enrollForm').submit(function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Set the current date and time
+                var currentDate = new Date();
+                var formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' '); // Format as yyyy-MM-dd HH:mm:ss
+
+                // Collect enrollment details
+                var enrollmentDetails = enrolledSubjects.map(subject => ({
+                    StudentIdNumber: parseInt($('#student-id').val()), // Ensure StudentIdNumber is parsed as an integer
+                    EdpCode: parseInt(subject.edpCode), // Ensure EdpCode is parsed as an integer
+                    SubjectCode: subject.subjectCode,
+                    Status: "Active" // Assuming this field should always be "Active"
+                }));
+
+                // Create the enrollment header object
+                var enrollmentHeader = {
+                    StudentIdNumber: parseInt($('#student-id').val()), // Ensure StudentIdNumber is parsed as an integer
+                    Encoder: $('input[name="Encoder"]').val(),
+                    TotalUnits: parseInt($('#total-units').val()), // Ensure TotalUnits is parsed as an integer
+                    DateEnrolled: formattedDate, // Send DateEnrolled as a string
+                    Status: "Active"
+                };
+
+                // Send POST request to enroll student
+                $.ajax({
+                    url: '/api/EnrollStudentToSubject/EnrollHeader',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(enrollmentHeader),
+                    success: function (data) {
+                        console.log("Enrollment Header Success:", data);
+
+                        // After successfully enrolling header, proceed to enroll details
+                        enrollDetails(enrollmentDetails);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("Enrollment Header Error:", xhr, textStatus, errorThrown);
+                        alert('Error occurred while enrolling header.');
+                    }
+                });
+
+                function enrollDetails(enrollmentDetails) {
+                    // Send POST request to enroll student details
+                    $.ajax({
+                        url: '/api/EnrollStudentToSubject/EnrollDetails',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(enrollmentDetails),
+                        success: function (data) {
+                            console.log("Enrollment Details Success:", data);
+                            alert("Enrollment successful!");
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error("Enrollment Details Error:", xhr, textStatus, errorThrown);
+                            alert('Error occurred while enrolling details.');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
