@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using EnrollmentSystem.Web.Data;
+﻿using EnrollmentSystem.Web.Data;
 using EnrollmentSystem.Web.Models.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EnrollmentSystem.Web.Controllers
@@ -33,8 +33,26 @@ namespace EnrollmentSystem.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.SubjectSchedProperty.Add(subjectSched);
-                await _context.SaveChangesAsync();
+                using (var transaction = await _context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT SubjectSchedProperty ON");
+
+                        _context.SubjectSchedProperty.Add(subjectSched);
+                        await _context.SaveChangesAsync();
+
+                        _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT SubjectSchedProperty OFF");
+
+                        await transaction.CommitAsync();
+                    }
+                    catch
+                    {
+                        await transaction.RollbackAsync();
+                        ModelState.AddModelError("", "An error occurred while saving the schedule.");
+                    }
+                }
+
                 return RedirectToAction("ScheduleEntry");
             }
 
