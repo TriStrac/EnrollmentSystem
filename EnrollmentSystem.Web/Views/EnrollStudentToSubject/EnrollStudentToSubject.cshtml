@@ -89,7 +89,7 @@
             <input type="hidden" name="Status" value="Active" id="status">
             <label for="total-units" class="form-label">Total Units</label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="total-units" name="TotalUnits" value="Total Units: 3" readonly>
+                <input type="text" class="form-control" id="total-units" name="TotalUnits" value="3" readonly>
                 <input type="text" class="form-control" placeholder="Encoder Name" name="Encoder" aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Save</button>
             </div>
@@ -138,8 +138,8 @@
                     success: function (data) {
                         console.log("Enrolled Subjects Success:", data); // Log the data to see what is being returned
                         if (data && data.length > 0) {
-                            enrolledSubjects = data; // Store enrolled subjects
-
+                            enrolledSubjects = data
+                            
                             var tbody = document.getElementById("student-schedule-body");
                             tbody.innerHTML = ""; // Clear existing rows
 
@@ -305,6 +305,19 @@
                 var currentDate = new Date();
                 var formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' '); // Format as yyyy-MM-dd HH:mm:ss
 
+                // Extract numeric part from TotalUnits string
+                var totalUnitsString = $('#total-units').val();
+                var totalUnits = parseInt(totalUnitsString.match(/\d+/)[0], 10);
+
+                // Create the enrollment header object
+                var enrollmentHeader = {
+                    StudentIdNumber: parseInt($('#student-id').val()),
+                    DateEnrolled: formattedDate,
+                    Encoder: $('input[name="Encoder"]').val(),
+                    TotalUnits: totalUnits,
+                    Status: "Active"
+                };
+
                 // Collect enrollment details
                 var enrollmentDetails = enrolledSubjects.map(subject => ({
                     StudentIdNumber: parseInt($('#student-id').val()), // Ensure StudentIdNumber is parsed as an integer
@@ -313,16 +326,14 @@
                     Status: "Active" // Assuming this field should always be "Active"
                 }));
 
-                // Create the enrollment header object
-                var enrollmentHeader = {
-                    StudentIdNumber: parseInt($('#student-id').val()), // Ensure StudentIdNumber is parsed as an integer
-                    Encoder: $('input[name="Encoder"]').val(),
-                    TotalUnits: parseInt($('#total-units').val()), // Ensure TotalUnits is parsed as an integer
-                    DateEnrolled: formattedDate, // Send DateEnrolled as a string
-                    Status: "Active"
-                };
+                console.log("Enrollment Header:", enrollmentHeader);
+                console.log("Enrollment Details:", enrollmentDetails);
 
-                // Send POST request to enroll student
+                // Enroll student header
+                enrollStudentHeader(enrollmentHeader, enrollmentDetails);
+            });
+
+            function enrollStudentHeader(enrollmentHeader, enrollmentDetails) {
                 $.ajax({
                     url: '/api/EnrollStudentToSubject/EnrollHeader',
                     type: 'POST',
@@ -332,33 +343,33 @@
                         console.log("Enrollment Header Success:", data);
 
                         // After successfully enrolling header, proceed to enroll details
-                        enrollDetails(enrollmentDetails);
+                        enrollStudentDetails(enrollmentDetails);
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         console.error("Enrollment Header Error:", xhr, textStatus, errorThrown);
                         alert('Error occurred while enrolling header.');
                     }
                 });
+            }
 
-                function enrollDetails(enrollmentDetails) {
-                    // Send POST request to enroll student details
-                    $.ajax({
-                        url: '/api/EnrollStudentToSubject/EnrollDetails',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify(enrollmentDetails),
-                        success: function (data) {
-                            console.log("Enrollment Details Success:", data);
-                            alert("Enrollment successful!");
-                        },
-                        error: function (xhr, textStatus, errorThrown) {
-                            console.error("Enrollment Details Error:", xhr, textStatus, errorThrown);
-                            alert('Error occurred while enrolling details.');
-                        }
-                    });
-                }
-            });
+            function enrollStudentDetails(enrollmentDetails) {
+                $.ajax({
+                    url: '/api/EnrollStudentToSubject/EnrollDetails',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(enrollmentDetails),
+                    success: function (data) {
+                        console.log("Enrollment Details Success:", data);
+                        alert("Enrollment successful!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("Enrollment Details Error:", xhr, textStatus, errorThrown);
+                        console.error('Error: ' + xhr.responseText);
+                    }
+                });
+            }
         });
+
     </script>
 </body>
 </html>
